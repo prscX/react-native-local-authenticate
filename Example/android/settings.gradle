@@ -1,0 +1,5 @@
+rootProject.name = 'Example'
+include ':react-native-local-authenticate'
+project(':react-native-local-authenticate').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-local-authenticate/android')
+
+include ':app'
