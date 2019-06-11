@@ -35,6 +35,10 @@ class LocalAuthenticate {
       })
     });
   }
+
+  static CancelAuthenticate() {
+    RNLocalAuthenticate.CancelAuthenticate()
+  }
 }
 
 export { LocalAuthenticate as RNLocalAuthenticate }

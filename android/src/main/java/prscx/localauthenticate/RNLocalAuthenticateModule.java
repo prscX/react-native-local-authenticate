@@ -124,7 +124,7 @@ public class RNLocalAuthenticateModule extends ReactContextBaseJavaModule {
 
 
   @ReactMethod
-  public void cancelAuthenticate(final Callback callback) {
+  public void CancelAuthenticate(final Callback callback) {
     final Activity activity = this.getCurrentActivity();
     activity.runOnUiThread(new Runnable() {
       @Override
