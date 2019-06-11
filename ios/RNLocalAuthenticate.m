@@ -73,10 +73,7 @@ RCT_EXPORT_METHOD(Authenticate:(NSString *)reason resolve:(RCTResponseSenderBloc
     [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
             localizedReason:reason
                       reply:^(BOOL success, NSError *error) {
-                          resolve(@{
-                                    @"success": @(success),
-                                    @"error": error == nil ? [NSNull null] : [self convertErrorCode:error],
-                                    });
+                          resolve(@[[NSNumber numberWithLong: success]]);
                       }];
 }
 

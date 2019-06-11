@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package prscx.localauthenticate;
 
 import java.util.Arrays;
 import java.util.Collections;
