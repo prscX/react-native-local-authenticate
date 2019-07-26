@@ -5,7 +5,12 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.bridge.WritableNativeArray;
 import android.app.Activity;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
@@ -42,18 +47,18 @@ public class RNLocalAuthenticateModule extends ReactContextBaseJavaModule {
             @Override
             public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
               mIsAuthenticating = false;
-              Bundle successResult = new Bundle();
-              successResult.putBoolean("success", true);
-              safeResolve(successResult);
+              // Bundle successResult = new Bundle();
+              // successResult.putBoolean("success", true);
+              safeResolve(true);
             }
 
             @Override
             public void onAuthenticationFailed() {
               mIsAuthenticating = false;
               Bundle failResult = new Bundle();
-              failResult.putBoolean("success", false);
-              failResult.putString("error", "authentication_failed");
-              safeResolve(failResult);
+              // failResult.putBoolean("success", false);
+              // failResult.putString("error", "authentication_failed");
+              safeResolve(false);
               // Failed authentication doesn't stop the authentication process, stop it anyway so it works
               // with the promise API.
               safeCancel();
@@ -63,26 +68,36 @@ public class RNLocalAuthenticateModule extends ReactContextBaseJavaModule {
             public void onAuthenticationError(int errMsgId, CharSequence errString) {
               mIsAuthenticating = false;
               Bundle errorResult = new Bundle();
-              errorResult.putBoolean("success", false);
-              errorResult.putString("error", convertErrorCode(errMsgId));
-              errorResult.putString("message", errString.toString());
-              safeResolve(errorResult);
+              // errorResult.putBoolean("success", false);
+              // errorResult.putString("error", convertErrorCode(errMsgId));
+              // errorResult.putString("message", errString.toString());
+              safeResolve(false);
             }
 
             @Override
             public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
               mIsAuthenticating = false;
               Bundle helpResult = new Bundle();
-              helpResult.putBoolean("success", false);
-              helpResult.putString("error", convertHelpCode(helpMsgId));
-              helpResult.putString("message", helpString.toString());
-              safeResolve(helpResult);
+              // helpResult.putBoolean("success", false);
+              // helpResult.putString("error", convertHelpCode(helpMsgId));
+              // helpResult.putString("message", helpString.toString());
+              safeResolve(false);
               // Help doesn't stop the authentication process, stop it anyway so it works with the
               // promise API.
               safeCancel();
             }
           };
 
+  @ReactMethod
+  public void SupportedAuthenticationTypes(final Callback callback) {
+    boolean hasHardware = mFingerprintManager.isHardwareDetected();
+    List<Integer> results = new ArrayList<>();
+    if (hasHardware) {
+      results.add(AUTHENTICATION_TYPE_FINGERPRINT);
+    }
+
+    callback.invoke(results.toArray());
+  }
 
 
   @ReactMethod
@@ -106,10 +121,10 @@ public class RNLocalAuthenticateModule extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         if (mIsAuthenticating) {
-          Bundle cancelResult = new Bundle();
-          cancelResult.putBoolean("success", false);
-          cancelResult.putString("error", "app_cancel");
-          safeResolve(cancelResult);
+          // Bundle cancelResult = new Bundle();
+          // cancelResult.putBoolean("success", false);
+          // cancelResult.putString("error", "app_cancel");
+          safeResolve(false);
           mCallback = callback;
           return;
         }
@@ -141,13 +156,14 @@ public class RNLocalAuthenticateModule extends ReactContextBaseJavaModule {
     }
   }
 
-  private void safeResolve(Object result) {
+
+  private void safeResolve(boolean bundle) {
     if (mCallback != null) {
-      mCallback.invoke(result);
+      // mCallback.invoke(Arguments.makeNativeMap(bundle));
+      mCallback.invoke(bundle);
       mCallback = null;
     }
   }
-
 
   private static String convertErrorCode(int code) {
     switch (code) {
