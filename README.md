@@ -18,6 +18,36 @@ This library is the replica of expo-local-authentication source. It can be used 
 
 `$ npm install react-native-local-authenticate --save`
 
+## **RN60 >= RNLA V1 >**
+
+> RN60 above please use `react-native-local-authenticate` V1 and above
+
+- **iOS**
+
+> **iOS Prerequisite:** Please make sure `CocoaPods` is installed on your system
+
+	- Add the following to your `Podfile` -> `ios/Podfile` and run pod update:
+
+
+```
+  use_native_modules!
+
+  pod 'RNLocalAuthenticate', :path => '../node_modules/react-native-local-authenticate/ios'
+```
+
+- **Android**
+
+Please add below permission to your app `AndroidManifest`
+
+```
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+```
+
+## **RN60 < RNLA V1 <**
+
+> RN60 below please use `react-native-local-authenticate` V.0.*
+
 `$ react-native link react-native-local-authenticate`
 
 - **Android**
