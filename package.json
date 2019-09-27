@@ -1,6 +1,6 @@
 {
     "name": "react-native-local-authenticate",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "React Native: Locale Authenticate",
     "main": "RNLocalAuthenticate.js",
     "scripts": {
@@ -11,6 +11,7 @@
     ],
     "author": "Pranav Raj Singh Chauhan",
     "license": "Apache License",
+    "homepage": "https://github.com/prscX/react-native-locale-authenticate.git",
     "repository": {
         "type": "git",
         "url": "https://github.com/prscX/react-native-locale-authenticate.git"
