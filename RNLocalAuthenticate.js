@@ -37,7 +37,16 @@ class LocalAuthenticate {
   }
 
   static CancelAuthenticate() {
-    RNLocalAuthenticate.CancelAuthenticate()
+    return new Promise(function (resolve, reject) {
+      if (!RNLocalAuthenticate.CancelAuthenticate) {
+        reject()
+        return
+      }
+
+      RNLocalAuthenticate.CancelAuthenticate(() => {
+        resolve()
+      })
+    });
   }
 }
 
